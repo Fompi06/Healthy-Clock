@@ -31,9 +31,7 @@ uint32_t Timer5;
 
 void setup() {
   // put your setup code here, to run once:
-  for (int i = 2; i <= 6; i++) {
-    pinMode(i, OUTPUT);
-  }
+  for (int i = 2; i <= 6; i++) pinMode(i, OUTPUT);
   pinMode(BUZ, OUTPUT);
   pinMode(POW, INPUT_PULLUP);
   pinMode(SWCH, INPUT_PULLUP);
@@ -54,6 +52,7 @@ void workMode()
   bool missed = false;                                   // добавляем переменную, которая будет хранить: true - если человек пропустил отдых, false - если человек не пропускал отдых
   int f0 = 0;
   delay(500);                                            // ждем 500 мс, чтобы избежать последствий от дребезга кнопки
+  Timer1 = millis();                                   // сброс таймера
   while (1)
   {
     digitalWrite(RED, 0);
@@ -61,7 +60,6 @@ void workMode()
     bool flag = 1;                                       // добавляем переменную типа bool, чтобы включать и отключать точку
     disp.point(flag);
     disp.displayByte(numberSegments[a], numberSegments[b], numberSegments[c], numberSegments[d]);
-    Timer1 = millis();                                   // сброс таймера
     Timer2 = millis();                                   // сброс таймера
     Timer5 = millis();                                   // сброс таймера
     while (millis() - Timer1 <= 60000)
@@ -78,6 +76,7 @@ void workMode()
       }
     }
     d++; f++;
+    Timer1 = millis();                                   // сброс таймера
     if (d == 10) {
       d = 0;
       c++;
@@ -164,13 +163,13 @@ void relaxMode()
   bool missed = false;              // добавляем переменную, которая будет хранить: true - если человек пропустил отдых, false - если человек не пропускал отдых
   int f0 = 0;
   delay(500);                       // ждем 500 мс, чтобы избежать последствий от дребезга кнопки
+  Timer1 = millis();                                   // сброс таймера
   while (1)
   {
     noTone(BUZ);
     bool flag = 1;                  // добавляем переменную типа bool, чтобы включать и отключать точку
     disp.point(flag);
     disp.displayByte(numberSegments[a], numberSegments[b], numberSegments[c], numberSegments[d]);
-    Timer1 = millis();              // сброс таймера
     Timer2 = millis();              // сброс таймера
     Timer5 = millis();              // сброс таймера
     while (millis() - Timer1 <= 60000)
@@ -187,6 +186,7 @@ void relaxMode()
       }
     }
     d++; f++;
+    Timer1 = millis();                                   // сброс таймера
     if (d == 10) {
       d = 0;
       c++;
